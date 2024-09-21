@@ -1,7 +1,3 @@
-Here’s a sample README for your weather detection project:
-
----
-
 # Weather Detection Application
 
 ## Overview
@@ -64,7 +60,3 @@ Feel free to fork the repository and submit a pull request if you have suggestio
 
 ## License
 This project is open-source and available under the [MIT License](LICENSE).
-
----
-
-Feel free to modify any sections or add additional information as needed!
