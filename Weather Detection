@@ -1,0 +1,42 @@
+import requests
+
+def get_weather(city):
+    # Get latitude and longitude for the city
+    geocoding_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
+    location_response = requests.get(geocoding_url)
+    
+    if location_response.status_code == 200 and location_response.json()['results']:
+        location_data = location_response.json()['results'][0]
+        latitude = location_data['latitude']
+        longitude = location_data['longitude']
+
+        # Now get the weather data using latitude and longitude
+        weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true"
+        weather_response = requests.get(weather_url)
+
+        if weather_response.status_code == 200:
+            data = weather_response.json()
+            weather_info = data['current_weather']
+            return {
+                'city': city,
+                'temperature': weather_info['temperature'],
+                'weather': weather_info['weathercode'],  
+                'windspeed': weather_info['windspeed']
+            }
+    return None
+
+def main():
+    city = input("Enter the city name: ")
+    
+    weather_info = get_weather(city)
+    
+    if weather_info:
+        print(f"City: {weather_info['city']}")
+        print(f"Temperature: {weather_info['temperature']}°C")
+        print(f"Weather Code: {weather_info['weather']}")
+        print(f"Wind Speed: {weather_info['windspeed']} m/s")
+    else:
+        print("City not found.")
+
+if __name__ == "__main__":
+    main()
